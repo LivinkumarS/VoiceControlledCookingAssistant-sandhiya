@@ -52,6 +52,7 @@ export default function SpeechToText({ handleSubmit, setScript }) {
       } catch (error) {
         console.error("Microphone permission denied:", error);
         setPermissionDenied(true);
+        SpeechRecognition.stopListening();
       } finally {
         setIsRequestingPermission(false);
       }
