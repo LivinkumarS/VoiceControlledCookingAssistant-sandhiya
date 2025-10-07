@@ -22,7 +22,7 @@ export default function App() {
     }
 
     try {
-      const result = await fetch("http://localhost:5000/api/recipe", {
+      const result = await fetch("https://voice-controlled-cooking-assistant-six.vercel.app/api/recipe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
