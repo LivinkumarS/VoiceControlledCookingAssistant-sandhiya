@@ -30,6 +30,8 @@ export default function SpeechToText({ handleSubmit, setScript }) {
   }, [listening, transcript]);
 
   const handleClick = async () => {
+    console.log(listening);
+
     if (!listening) {
       setIsRequestingPermission(true);
       setPermissionDenied(false);
@@ -50,16 +52,19 @@ export default function SpeechToText({ handleSubmit, setScript }) {
           });
         }
       } catch (error) {
-        console.error("Microphone permission denied:", error);
         setPermissionDenied(true);
         SpeechRecognition.stopListening();
+        console.error("Microphone permission denied:", error);
       } finally {
         setIsRequestingPermission(false);
       }
     } else {
+      if (transcript) {
+        handleSubmit();
+      }
+
       SpeechRecognition.stopListening();
       resetTranscript();
-      handleSubmit();
     }
   };
 
