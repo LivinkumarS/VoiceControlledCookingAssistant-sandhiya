@@ -30,43 +30,46 @@ export default function SpeechToText({ handleSubmit, setScript }) {
   }, [listening, transcript]);
 
   const handleClick = async () => {
-    console.log(listening);
+  if (!listening) {
+    setIsRequestingPermission(true);
+    setPermissionDenied(false);
 
-    if (!listening) {
-      setIsRequestingPermission(true);
-      setPermissionDenied(false);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
 
-      try {
-        // Request microphone permission first
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+        
+        // Add a small delay to ensure cleanup
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        SpeechRecognition.startListening({
+          continuous: true,
+          language: "en-IN",
         });
-
-        // If we get the stream, we have permission - start listening
-        if (stream) {
-          // Stop all tracks to release the microphone immediately
-          stream.getTracks().forEach((track) => track.stop());
-          SpeechRecognition.startListening({
-            continuous: true,
-            language: "en-IN",
-          });
-        }
-      } catch (error) {
-        setPermissionDenied(true);
-        SpeechRecognition.stopListening();
-        console.error("Microphone permission denied:", error);
-      } finally {
-        setIsRequestingPermission(false);
       }
-    } else {
-      if (transcript) {
+    } catch (error) {
+      setPermissionDenied(true);
+      SpeechRecognition.stopListening();
+      console.error("Microphone permission denied:", error);
+    } finally {
+      setIsRequestingPermission(false);
+    }
+  } else {
+    // Stop listening first, then handle transcript
+    SpeechRecognition.stopListening();
+    
+    // Add a small delay before processing transcript
+    setTimeout(() => {
+      if (transcript.trim()) {
         handleSubmit();
       }
-
-      SpeechRecognition.stopListening();
       resetTranscript();
-    }
-  };
+    }, 300);
+  }
+};
 
   const handleReset = () => {
     if (listening) {
