@@ -58,6 +58,7 @@ export default function SpeechToText({ handleSubmit, setScript }) {
       }
     } else {
       SpeechRecognition.stopListening();
+      resetTranscript();
       handleSubmit();
     }
   };
