@@ -22,13 +22,16 @@ export default function App() {
     }
 
     try {
-      const result = await fetch("https://voice-controlled-cooking-assistant-six.vercel.app/api/recipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ keyword: script }),
-      });
+      const result = await fetch(
+        "https://voice-controlled-cooking-assistant-six.vercel.app/api/recipe",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ keyword: script }),
+        }
+      );
 
       if (!result.ok) {
         console.error("Failed to fetch recipe:", result.statusText);
@@ -50,10 +53,11 @@ export default function App() {
       <Header />
       {loading ? (
         <Loader />
-      ) : recipe ? (
-        <Recipe recipe={recipe} setRecipe={setrecipe} setScript={setScript} />
       ) : (
-        <SpeechToText setScript={setScript} handleSubmit={handleSubmit} />
+        <>
+          <Recipe recipe={recipe} setRecipe={setrecipe} setScript={setScript} />
+          <SpeechToText setScript={setScript} handleSubmit={handleSubmit} />
+        </>
       )}
     </div>
   );
