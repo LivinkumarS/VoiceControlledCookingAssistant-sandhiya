@@ -39,9 +39,9 @@ export default function Header() {
 
           {/* Main Title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 tracking-tight">
-            Food Recipe
+            Voice Controlled Cooking
             <span className="block bg-gradient-to-r from-amber-200 to-yellow-300 bg-clip-text text-transparent">
-              Picker
+              Assistant
             </span>
           </h1>
 
