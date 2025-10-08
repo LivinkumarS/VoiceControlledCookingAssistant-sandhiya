@@ -9,6 +9,7 @@ export default function App() {
   const [recipe, setrecipe] = useState("");
   const [script, setScript] = useState("");
   const [loading, setLoading] = useState(false);
+  const [cantFind, setCantFind] = useState(false);
 
   async function handleSubmit() {
     console.log(script);
@@ -22,23 +23,29 @@ export default function App() {
     }
 
     try {
-      const result = await fetch("https://voice-controlled-cooking-assistant-six.vercel.app/api/recipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ keyword: script }),
-      });
+      const result = await fetch(
+        "https://voice-controlled-cooking-assistant-six.vercel.app/api/recipe",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ keyword: script }),
+        }
+      );
 
       if (!result.ok) {
         console.error("Failed to fetch recipe:", result.statusText);
+        setCantFind(true);
         return;
       }
 
       const res = await result.json();
+      setCantFind(false);
 
       setrecipe(res?.recipe || "");
     } catch (error) {
+      setCantFind(true);
       console.error("Error fetching recipe:", error);
     } finally {
       setLoading(false);
@@ -53,7 +60,12 @@ export default function App() {
       ) : recipe ? (
         <Recipe recipe={recipe} setRecipe={setrecipe} setScript={setScript} />
       ) : (
-        <SpeechToText setScript={setScript} handleSubmit={handleSubmit} />
+        <SpeechToText
+          setScript={setScript}
+          handleSubmit={handleSubmit}
+          cantFind={cantFind}
+          setCantFind={setCantFind}
+        />
       )}
     </div>
   );

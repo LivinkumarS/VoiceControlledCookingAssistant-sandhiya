@@ -171,7 +171,7 @@ export default function Recipe({ recipe, setScript, setRecipe }) {
             onClick={handleReset}
             className="group flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-lg"
           >
-            <span>Create New Recipe</span>
+            <span>New Recipe</span>
           </button>
 
           <button

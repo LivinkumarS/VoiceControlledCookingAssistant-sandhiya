@@ -3,7 +3,12 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-export default function SpeechToText({ handleSubmit, setScript }) {
+export default function SpeechToText({
+  handleSubmit,
+  setScript,
+  cantFind,
+  setCantFind,
+}) {
   const {
     transcript,
     listening,
@@ -118,6 +123,32 @@ export default function SpeechToText({ handleSubmit, setScript }) {
               </div>
               <button
                 onClick={retryPermission}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
+        )}
+        {cantFind && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl animate-fade-in">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <i className="fas fa-microphone-slash text-red-500 text-xl mr-3"></i>
+                <div>
+                  <h3 className="font-semibold text-red-800">
+                    Cannot Find Recipe
+                  </h3>
+                  <p className="text-red-600 text-sm">
+                    Please try again with any other keywords.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setCantFind(false);
+                  handleClick();
+                }}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 Try Again
