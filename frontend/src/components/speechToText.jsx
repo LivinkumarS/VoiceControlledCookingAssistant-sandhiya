@@ -57,12 +57,9 @@ export default function SpeechToText({ handleSubmit, setScript }) {
         setIsRequestingPermission(false);
       }
     } else {
-      if (transcript) {
-        handleSubmit();
-      }
-
-      SpeechRecognition.stopListening();
-      resetTranscript();
+      SpeechRecognition.stopListening()
+        .then(handleSubmit())
+        .catch((err) => console.log(err));
     }
   };
 
