@@ -49,7 +49,7 @@ export default function Header() {
           <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
             <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
             <span className="text-white/90 text-sm sm:text-base font-medium">
-              By <span className="text-amber-200 font-semibold">Sandhiya</span>
+              By <span className="text-amber-200 font-semibold">Mohammadi</span>
             </span>
           </div>
 
