@@ -1,0 +1,4 @@
+node --> should be installed
+
+server ---> go to server folder ---> open cmd ---> "npm run dev"... port: 5000
+frontend ---> go to frontend folder ---> open cmd ---> "npm run dev" port: 5173
